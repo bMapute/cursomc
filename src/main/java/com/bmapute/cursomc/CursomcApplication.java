@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.bmapute.cursomc.domain.Categoria;
 import com.bmapute.cursomc.domain.Cidade;
+import com.bmapute.cursomc.domain.Cliente;
+import com.bmapute.cursomc.domain.Endereco;
 import com.bmapute.cursomc.domain.Estado;
 import com.bmapute.cursomc.domain.Produto;
+import com.bmapute.cursomc.domain.enums.TipoCliente;
 import com.bmapute.cursomc.repositories.CategoriaRepository;
 import com.bmapute.cursomc.repositories.CidadeRepository;
+import com.bmapute.cursomc.repositories.ClienteRepository;
+import com.bmapute.cursomc.repositories.EnderecoRepository;
 import com.bmapute.cursomc.repositories.EstadoRepository;
 import com.bmapute.cursomc.repositories.ProdutoRepository;
 
@@ -22,12 +27,21 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	CategoriaRepository categoriaRepository;
+	
 	@Autowired
 	ProdutoRepository produtoRepository;
+	
 	@Autowired
 	EstadoRepository estadoRepository;
+	
 	@Autowired
 	CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -66,6 +80,19 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	estadoRepository.save(Arrays.asList(est1,est2));
 	cidadeRepository.save(Arrays.asList(c1,c2,c3));
+	
+	Cliente cl1=new Cliente(null, "Maria Silva", "maria@gmail.com", "3444412121", TipoCliente.PESSOAFISICA);
 		
+	cl1.getTelefones().addAll(Arrays.asList("232333121","2411121"));
+	
+	Endereco e1=new Endereco(null, "Rua flores", "31", "Costa do sol ", "32111", cl1, c1);
+	
+	Endereco e2=new Endereco(null, "Rua das mafureiras", "313", "Bairro Central ", "32111", cl1, c2);
+	
+	cl1.getEnderecos().addAll(Arrays.asList(e1,e2));
+	
+	clienteRepository.save(Arrays.asList(cl1));
+	enderecoRepository.save(Arrays.asList(e1,e2));
+	
 	}
 }
