@@ -2,21 +2,43 @@ package com.bmapute.cursomc.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.bmapute.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Campo obrigatorio")
+	@Length(min=5, max=120, message="O tamnho deve ter entre 5 a 120 caracters ")
 	private String nome;
+	
+	@NotEmpty(message="Campo obrigatorio")
+	@Email(message="Email invalido")
 	private String email;
+	
+	@NotEmpty(message="Campo obrigatorio")
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
 	
+	@NotEmpty(message="Campo obrigatorio")
 	private String logradouro;
+	
 	private String numero;
+	
 	private String complemento;
+	
+	@NotEmpty(message="Campo obrigatorio")
 	private String cep;
 	
+	@NotEmpty(message="Campo obrigatorio")
 	private String telefone1;
+	
 	private String telefone2;
 	private String telefone3;
 	
